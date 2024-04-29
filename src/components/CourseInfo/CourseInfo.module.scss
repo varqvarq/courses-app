@@ -1,0 +1,75 @@
+.courseInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  color: #333E48;
+
+  .fieldTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.25rem;
+  }
+  
+  .title {
+    margin-bottom: 1.5625rem;
+    font-size: 2rem;
+  }
+
+  .infocard {
+    border: 1px solid #CFCFCF;
+    border-radius: 4px;
+    margin-bottom: 1.5625rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 23.4375rem;
+    justify-content: center;
+    align-items: center;
+
+    .description {
+      display: flex;
+      flex-direction: column;
+
+      .descriptionText {
+        width: 30.4375rem;
+        font-size: 1rem;
+        line-height: 1.25rem;
+      }
+
+    }
+
+    .divider {
+      border: 0.8px solid #CFCFCF;
+      width: 200px;
+      transform: rotate(90deg);
+      align-self: center;
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+
+      .id{
+      }
+
+      .duration {
+      }
+      .creationDate {
+      }
+      .authors {
+    
+      }
+    }
+
+    }
+
+  .button {
+    width: 11.5625rem;
+    height: 3.125rem;
+    align-self: flex-end;
+  }
+}

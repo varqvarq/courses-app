@@ -3,17 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.96",
-    "@types/react": "^18.2.79",
-    "@types/react-dom": "^18.2.25",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "5.0.0"
+
   },
   "scripts": {
     "start": "react-scripts start",
@@ -24,7 +17,7 @@
     "eslint:fix": "eslint --fix --ext .ts --ext .tsx src",
     "prepare": "husky",
     "test:nowatch": "react-scripts test --watchAll=false",
-      "prepublish": "npm run eslint:fix"
+    "prepublish": "npm run eslint:fix"
   },
   "eslintConfig": {
     "extends": [
@@ -45,12 +38,21 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.96",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
     "@eslint/js": "^9.1.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "husky": "^9.0.11",
-    "typescript": "^5.4.5",
-    "typescript-eslint": "^7.7.0"
+    "typescript": "^4.9.5",
+    "typescript-eslint": "^7.7.0",
+    "sass": "^1.75.0",
+    "web-vitals": "^2.1.4"
   }
 }
