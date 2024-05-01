@@ -3,10 +3,10 @@ import { useState } from 'react';
 import style from './Courses.module.scss';
 
 import CourseCard from './components/CourseCard/CourseCard';
-import CourseInfo, { findCourse } from '../CourseInfo/CourseInfo';
+import CourseInfo from '../CourseInfo/CourseInfo';
 import EmptyCourseList from '../EmptyCourseList/EmptyCourseList';
 
-export interface ICourses {
+export interface ICourse {
 	id: string;
 	title: string;
 	description: string;
@@ -15,48 +15,50 @@ export interface ICourses {
 	authors: string[];
 }
 
-export interface IAuthors {
+export interface IAuthor {
 	id: string;
 	name: string;
 }
 
-export default function Courses({
-	courses,
-	authors,
-}: {
-	courses: ICourses[];
-	authors: IAuthors[];
-}) {
-	const [courseShow, setCourseShow] = useState(true);
+interface CoursesProps {
+	courses: ICourse[];
+	authors: IAuthor[];
+}
+
+const Courses: React.FC<CoursesProps> = ({ courses, authors }) => {
 	const [courseId, setCourseId] = useState('');
 
-	function handleClick(course: ICourses) {
-		setCourseShow(!courseShow);
-		setCourseId(course.id);
+	function handleClick(id: string) {
+		setCourseId(id);
+	}
+
+	if (courses.length === 0) {
+		return <EmptyCourseList />;
 	}
 
 	return (
 		<div className={style.courses}>
-			{courses &&
-				courseShow &&
+			{courseId ? (
+				<CourseInfo
+					courseId={courseId}
+					hideCourseInfo={() => handleClick('')}
+				/>
+			) : (
 				courses.map((course) => {
 					return (
 						<CourseCard
 							key={course.id}
 							course={course}
 							authors={authors}
-							onClick={() => {
-								handleClick(course);
+							showCourseInfo={() => {
+								handleClick(course.id);
 							}}
 						/>
 					);
-				})}
-			{courses && !courseShow && (
-				<CourseInfo
-					courseId={courseId}
-					onClick={() => setCourseShow(!courseShow)}
-				/>
+				})
 			)}
 		</div>
 	);
-}
+};
+
+export default Courses;

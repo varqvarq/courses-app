@@ -6,14 +6,16 @@ interface ButtonInterface {
 	onClick: () => void;
 }
 
-export default function Button({
+const Button: React.FC<ButtonInterface> = ({
 	buttonText,
 	onClick,
 	className,
-}: ButtonInterface) {
+}) => {
 	return (
 		<button className={className} onClick={onClick}>
 			{buttonText}
 		</button>
 	);
-}
+};
+
+export default Button;

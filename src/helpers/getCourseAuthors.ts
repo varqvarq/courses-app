@@ -1,8 +1,8 @@
-import { IAuthors } from '../components/Courses/Courses';
+import { IAuthor } from '../components/Courses/Courses';
 
 export default function getAuthors(
 	courseAuthors: string[],
-	authors: IAuthors[]
+	authors: IAuthor[]
 ): string {
 	return courseAuthors
 		.map((courseAuthor) => {

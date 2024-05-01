@@ -15,10 +15,8 @@ body {
   font-family: 'Open Sans';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center; */
-
+  color: #333E48;
+  overflow: hidden;
 }
 
 article {
@@ -28,17 +26,4 @@ article {
 }
 
 
-
-.button {
-  width: 8.75rem;
-  height: 3.125rem;
-  background-color: #007298;
-  border: none;
-  color: #FFFFFF;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 5px;
-  text-transform: uppercase;
-  cursor: pointer;
-}
 

@@ -1,19 +1,19 @@
-import React from 'react';
-
 import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
 
 import style from './Header.module.scss';
 
-export default function Header() {
+const Header: React.FC = () => {
 	return (
-		<div className={style.header}>
+		<div className={style.container}>
 			<Logo />
 			<Button
-				className='button'
+				className={`button ${style.button}`}
 				buttonText='Logout'
 				onClick={() => console.log('')}
 			/>
 		</div>
 	);
-}
+};
+
+export default Header;

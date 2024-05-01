@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IAuthors, ICourses } from '../Courses/Courses';
+import { ICourse } from '../Courses/Courses';
 
 import { mockedAuthorsList, mockedCoursesList } from '../../constant';
 
@@ -12,73 +12,78 @@ import Button from '../../common/Button/Button';
 
 import style from './CourseInfo.module.scss';
 
-export default function CourseInfo({
-	courseId,
-	onClick,
-}: {
+interface CourseInfoProps {
 	courseId: string;
-	onClick: () => void;
-}) {
-	console.log(courseId);
+	hideCourseInfo: () => void;
+}
+
+const CourseInfo: React.FC<CourseInfoProps> = ({
+	courseId,
+	hideCourseInfo,
+}) => {
 	const course = findCourse(courseId);
+
 	return (
 		<>
-			<div className={style.courseInfo}>
-				<h2 className={style.title}>{course?.title}</h2>
+			{course && (
+				<div className={style.courseInfo}>
+					<h2 className={style.title}>{course.title}</h2>
 
-				<div className={style.infocard}>
-					<div className={style.description}>
-						<span className={style.fieldTitle}>Description: </span>
-						<br></br>
-						<article className={style.descriptionText}>
-							{course?.description}
-						</article>
+					<div className={style.infocard}>
+						<div className={style.leftSection}>
+							<p className={style.label}>Description: </p>
+							<br></br>
+							<article className={style.descriptionText}>
+								{course.description}
+							</article>
+						</div>
+
+						<div className={style.divider}></div>
+
+						<div className={style.rightSection}>
+							<div className={style.column}>
+								<p className={style.label}>ID:</p>
+								<p className={style.label}>Duration:</p>
+								<p className={style.label}>Created:</p>
+								<p className={style.label}>Authors:</p>
+							</div>
+
+							<div className={style.column}>
+								<p className={style.value}>{formatId(course.id)}</p>
+								<p className={style.value}>
+									<b>{getDuration(course.duration).split(' ')[0]} </b>
+									{getDuration(course.duration).split(' ')[1]}
+								</p>
+								<p className={style.value}>{formatDate(course.creationDate)}</p>
+								<p className={style.value}>
+									{getAuthors(course.authors, mockedAuthorsList)}
+								</p>
+							</div>
+						</div>
 					</div>
 
-					<hr className={style.divider}></hr>
-
-					<div className={style.info}>
-						<p className={style.id}>
-							<span className={style.fieldTitle}>ID: </span>
-							{course?.id}
-						</p>
-
-						<p className={style.duration}>
-							<span className={style.fieldTitle}>Duration: </span>
-
-							{course?.duration ? getDuration(course.duration) : ''}
-						</p>
-						<p className={style.creationDate}>
-							<span className={style.fieldTitle}>Created: </span>
-							{course?.creationDate ? formatDate(course.creationDate) : ''}
-						</p>
-						<p className={style.authors}>
-							<span className={style.fieldTitle}>Authors: </span>
-							{course?.authors
-								? getAuthors(course?.authors, mockedAuthorsList)
-								: ''}
-						</p>
-					</div>
+					<Button
+						className={`button ${style.button}`}
+						buttonText={'back'}
+						onClick={hideCourseInfo}
+					/>
 				</div>
-
-				<Button
-					className={'button ' + style.button}
-					buttonText={'back'}
-					onClick={() => {
-						onClick();
-					}}
-				></Button>
-			</div>
+			)}
 		</>
 	);
-}
+};
 
-export function findCourse(courseId: string): ICourses | undefined {
+function findCourse(courseId: string): ICourse | undefined {
 	if (mockedCoursesList && mockedCoursesList.length > 0) {
-		return mockedCoursesList.find((course: any) => {
+		return mockedCoursesList.find((course: ICourse) => {
 			return course.id === courseId;
 		});
-	} else {
-		return;
 	}
+	return;
 }
+
+function formatId(id: string) {
+	return id.split('-').slice(0, 3).join('-');
+}
+
+export default CourseInfo;
