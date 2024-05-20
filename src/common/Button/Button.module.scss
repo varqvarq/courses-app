@@ -1,4 +1,5 @@
 .button {
+  width: fit-content;
   height: 3.125rem;
   background-color: #007298;
   border: none;
@@ -8,5 +9,9 @@
   border-radius: 5px;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+.button:hover {
+  background-color: #015874;
 }
 

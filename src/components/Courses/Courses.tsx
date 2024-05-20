@@ -4,7 +4,7 @@ import style from './Courses.module.scss';
 
 import CourseCard from './components/CourseCard/CourseCard';
 import CourseInfo from '../CourseInfo/CourseInfo';
-import EmptyCourseList from '../EmptyCourseList/EmptyCourseList';
+import SearchBar from '../../common/SearchBar/SearchBar';
 
 export interface ICourse {
 	id: string;
@@ -27,13 +27,24 @@ interface CoursesProps {
 
 const Courses: React.FC<CoursesProps> = ({ courses, authors }) => {
 	const [courseId, setCourseId] = useState('');
+	const [searchResults, setSearchResults] = useState<ICourse[]>(courses);
 
 	function handleClick(id: string) {
 		setCourseId(id);
 	}
 
-	if (courses.length === 0) {
-		return <EmptyCourseList />;
+	function handleSearch(query: string) {
+		if (!query) {
+			setSearchResults(courses);
+			return;
+		}
+
+		const filteredCourses = courses.filter(
+			(course) =>
+				course.title.toLowerCase().includes(query.toLowerCase()) ||
+				course.id.toLowerCase().includes(query.toLowerCase())
+		);
+		setSearchResults(filteredCourses);
 	}
 
 	return (
@@ -44,18 +55,22 @@ const Courses: React.FC<CoursesProps> = ({ courses, authors }) => {
 					hideCourseInfo={() => handleClick('')}
 				/>
 			) : (
-				courses.map((course) => {
-					return (
-						<CourseCard
-							key={course.id}
-							course={course}
-							authors={authors}
-							showCourseInfo={() => {
-								handleClick(course.id);
-							}}
-						/>
-					);
-				})
+				<>
+					<SearchBar onSearch={handleSearch} />
+
+					{searchResults.map((course) => {
+						return (
+							<CourseCard
+								key={course.id}
+								course={course}
+								authors={authors}
+								showCourseInfo={() => {
+									handleClick(course.id);
+								}}
+							/>
+						);
+					})}
+				</>
 			)}
 		</div>
 	);

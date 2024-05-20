@@ -17,6 +17,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #333E48;
   overflow: hidden;
+  background-color: #F8F8F8;
 }
 
 article {
@@ -24,6 +25,8 @@ article {
   font-size: 1rem;
   line-height: 1.25rem;
 }
+
+
 
 
 

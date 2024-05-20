@@ -1,0 +1,135 @@
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__title {
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 125%;
+    color: #333e48;
+  }
+
+  &__content{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid hsl(0, 0%, 81%);
+    border-radius: .25rem;
+    background-color: #FFFF;
+    padding: 2.625rem 5rem 5rem 5rem;
+    margin-bottom: 2rem;
+
+    .wrapper {
+      max-width: 60.4375rem;
+
+      .subheading {
+        width: fit-content;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 133%;
+        text-transform: capitalize;
+        color: #333e48;
+        margin-bottom: 1.5625rem
+      }
+  
+      .titleInput {
+        width: 59rem;
+      }
+  
+      .descriptionArea {
+        width: 59rem;
+        min-height: 9.5rem;
+        text-wrap: wrap;
+      }
+    
+      .durationWrapper {
+  
+        .durationInput {
+          width: 25rem;
+          margin-right: .9375rem;
+        }
+      }
+  
+      .authorsSection {
+        display: flex;
+        justify-content: space-between;
+
+        .authorsList {
+  
+          .authorsInput {
+            width: 25rem;
+            margin-right: .9375rem;
+            margin-bottom: 2rem;
+          }
+    
+          .authorsButton {
+            width: 11.5625rem;
+          }
+  
+          .authorsSubheading {
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 100%;
+            color: #333e48;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+          }
+        }
+  
+        .courseAuthorsList {
+          display: flex;
+          flex-direction: column;
+  
+          .placeholder{
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 125%;
+            text-align: center;
+            color: #333e48;
+            align-self: center;
+          }
+          .red {
+            color: red;
+          }
+        }
+      }
+  
+      .error {
+        border-color: red;
+      }
+      
+  
+      .errorMessage {
+        visibility: hidden;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 125%;
+        color: #f00;
+        min-height: 32px;
+  
+        &:nth-of-type(1) {
+          min-height: 24px;
+        }
+      }
+  
+      .errorMessage.active {
+        visibility: visible;
+      }
+    }
+    
+    
+  }
+
+  .buttonsWrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+
+    .formButton {
+      width: 11.5625rem;
+      margin-bottom: 8.125rem;
+    }
+  }
+}

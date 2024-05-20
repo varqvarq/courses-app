@@ -1,0 +1,57 @@
+
+.input {
+  height: 50px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+  border: 1px solid #CFCFCF;
+  border-radius: .25rem;
+  padding: .8125rem 0 .8125rem .9375rem;
+  caret-color: #007298;
+  position: relative;
+}
+
+.textArea {
+  padding: .9375rem 0 0 .9375rem; 
+  resize: none;
+}
+
+.label {
+  width: fit-content;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 125%;
+  color: #333e48;
+  text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
+}
+
+.smallLabel {
+  font-size: 14px;
+  line-height: 143%;
+}
+
+.errorSpan {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: #f00;
+  margin-top: 5px;
+
+  &:nth-of-type(1) {
+    min-height: 24px;
+  }
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+
+
+
+
+
+

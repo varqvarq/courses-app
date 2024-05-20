@@ -1,0 +1,29 @@
+
+.authorItem {
+  display: flex;
+  margin-bottom: .875rem;
+
+  .authorName {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 125%;
+    color: #333e48;
+    margin-right: .625rem;
+  }
+
+  .button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: none
+  }
+
+  .addButton {
+    background-image: url('../../../../assets/addBtn.svg');
+    margin-right: .625rem;
+  }
+  
+  .deleteButton {
+    background-image: url('../../../../assets/deleteBtn.svg');
+  }
+}

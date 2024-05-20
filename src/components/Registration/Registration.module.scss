@@ -1,0 +1,70 @@
+
+
+
+.form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  
+  .formTitle {
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 125%;
+    text-transform: capitalize;
+    text-align: center;
+    color: #333e48;
+  }
+
+  .formContent {
+    width: 36.5625rem;
+    height: 34.875rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #CFCFCF;
+    border-radius: .25rem;
+    background-color: #FFFF;  
+
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+      max-width: 17.875rem;
+      
+      .error {
+        border-color: red;
+      }
+  
+      .errorMessage {
+        visibility: hidden;
+        min-height: 34px;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 125%;
+        color: #f00;
+      }
+  
+      .errorMessage.active {
+        visibility: visible;
+      }
+  
+      .button {
+        margin-bottom: 2.1875rem;
+      }
+  
+      .link {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 125%;
+        text-align: center;
+        color: #333e48;
+        text-decoration: none;
+      }
+  
+      .link:hover {
+        color:#007298;
+      }
+    }
+  }
+}

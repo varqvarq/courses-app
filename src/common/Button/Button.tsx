@@ -1,18 +1,24 @@
-import './Button.scss';
+import style from './Button.module.scss';
 
 interface ButtonInterface {
-	className: string;
-	buttonText: string;
-	onClick: () => void;
+	className?: string;
+	buttonText?: string;
+	buttonType?: 'button' | 'submit' | 'reset';
+	onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button: React.FC<ButtonInterface> = ({
-	buttonText,
-	onClick,
 	className,
+	buttonText,
+	buttonType = 'button',
+	onClick,
 }) => {
 	return (
-		<button className={className} onClick={onClick}>
+		<button
+			className={`${style.button} ${className}`}
+			type={buttonType}
+			onClick={onClick}
+		>
 			{buttonText}
 		</button>
 	);
