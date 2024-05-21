@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import style from './Registration.module.scss';
 
@@ -16,13 +17,14 @@ interface UsernameFormElement extends HTMLFormElement {
 }
 
 const Registration: React.FC = () => {
+	const navigate = useNavigate();
 	const [errors, setErrors] = useState({
 		nameIsEmpty: false,
 		emailIsEmpty: false,
 		passwordIsEmpty: false,
 	});
 
-	const handleSubmit = (e: React.FormEvent<UsernameFormElement>) => {
+	const handleSubmit = async (e: React.FormEvent<UsernameFormElement>) => {
 		e.preventDefault();
 
 		const target = e.currentTarget.elements;
@@ -31,11 +33,38 @@ const Registration: React.FC = () => {
 		const email = target.email.value.trim();
 		const password = target.password.value.trim();
 
-		setErrors({
+		const newErrors = {
 			nameIsEmpty: !name,
 			emailIsEmpty: !email,
 			passwordIsEmpty: !password,
+		};
+
+		setErrors(newErrors);
+
+		if (Object.values(newErrors).some((error) => error)) {
+			return;
+		}
+
+		const userData = { name, email, password };
+
+		const response = await fetch('http://localhost:4000/register', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(userData),
 		});
+		const data = await response.json();
+
+		if (!response.ok) {
+			alert(data.errors);
+			return;
+		}
+
+		target.name.value = '';
+		target.email.value = '';
+		target.password.value = '';
+		navigate('/login');
 	};
 
 	const resetErrors = () => {
@@ -62,7 +91,7 @@ const Registration: React.FC = () => {
 					<span
 						className={`${style.errorMessage} ${errors.nameIsEmpty && style.active}`}
 					>
-						Name is required
+						Names is required
 					</span>
 
 					<Input
@@ -99,9 +128,9 @@ const Registration: React.FC = () => {
 
 					<span>
 						If you have an account you may{' '}
-						<a className={style.link} href='#'>
+						<Link className={style.link} to='/login'>
 							log in
-						</a>
+						</Link>
 					</span>
 				</div>
 			</div>

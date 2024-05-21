@@ -11,12 +11,11 @@ html {
 
 
 body {
-  margin: 0 auto;
+  /* margin: 0 auto; */
   font-family: 'Open Sans';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333E48;
-  overflow: hidden;
   background-color: #F8F8F8;
 }
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import uuid from 'react-uuid';
+import { Link, useNavigate } from 'react-router-dom';
 
 import style from './CreateCourse.module.scss';
 
@@ -12,10 +13,13 @@ import createDate from '../../helpers/createNewDate';
 
 import { ICourse, IAuthor } from '../Courses/Courses';
 
-import { mockedAuthorsList, mockedCoursesList } from '../../constant';
+import {
+	mockedCoursesList as courses,
+	mockedAuthorsList as authors,
+} from '../../constant';
 
-export const copyMockedCoursesList: ICourse[] = mockedCoursesList;
-export const copyMockedAuthorsList: IAuthor[] = mockedAuthorsList;
+export const copyCoursesList: ICourse[] = courses;
+export const copytAuthorsList: IAuthor[] = authors;
 
 interface FormElements extends HTMLFormControlsCollection {
 	title: HTMLInputElement;
@@ -28,6 +32,8 @@ interface UsernameFormElement extends HTMLFormElement {
 }
 
 const CreateCourse: React.FC = () => {
+	const navigate = useNavigate();
+
 	const initialErrors = {
 		titleIsEmpty: false,
 		descriptionIsEmpty: false,
@@ -37,7 +43,7 @@ const CreateCourse: React.FC = () => {
 
 	const [errors, setErrors] = useState(initialErrors);
 	const [name, setAuthorName] = useState('');
-	const [authors, setAuthors] = useState(copyMockedAuthorsList);
+	const [authors, setAuthors] = useState(copytAuthorsList);
 	const [courseAuthors, setCourseAuthors] = useState<IAuthor[]>([]);
 	const [duration, setDuraion] = useState('00:00 hours');
 
@@ -72,13 +78,13 @@ const CreateCourse: React.FC = () => {
 			authors: courseAuthors.map((courseAuthors) => courseAuthors.id),
 		};
 
-		if (!copyMockedCoursesList.includes(courseData)) {
-			copyMockedCoursesList.push(courseData);
+		if (!copyCoursesList.includes(courseData)) {
+			copyCoursesList.push(courseData);
 		}
 
 		courseAuthors.forEach((author) => {
-			if (!copyMockedAuthorsList.includes(author)) {
-				copyMockedAuthorsList.push(author);
+			if (!copytAuthorsList.includes(author)) {
+				copytAuthorsList.push(author);
 			}
 		});
 
@@ -88,6 +94,7 @@ const CreateCourse: React.FC = () => {
 		setDuraion('00:00 hours');
 		setCourseAuthors([]);
 		setAuthorName('');
+		navigate('/');
 	};
 
 	const removeFromAuthorsList = (id: string) => {
@@ -202,7 +209,7 @@ const CreateCourse: React.FC = () => {
 							inputType={'text'}
 							className={`${style.durationInput} ${errors.durationIsEmpty && style.error}`}
 							labelType={'small'}
-							placeholderText='input minutes'
+							placeholderText='input number'
 							onChange={handleDuration}
 						/>
 
@@ -241,7 +248,7 @@ const CreateCourse: React.FC = () => {
 
 							<h4
 								className={style.authorsSubheading}
-								onClick={() => setAuthors(copyMockedAuthorsList)}
+								onClick={() => setAuthors(copytAuthorsList)}
 							>
 								Authors List
 							</h4>
@@ -294,7 +301,9 @@ const CreateCourse: React.FC = () => {
 			</div>
 
 			<div className={style.buttonsWrapper}>
-				<Button buttonText={'cancel'} className={style.formButton} />
+				<Link to='/'>
+					<Button buttonText={'cancel'} className={style.formButton} />
+				</Link>
 				<Button
 					buttonText={'create course'}
 					className={style.formButton}

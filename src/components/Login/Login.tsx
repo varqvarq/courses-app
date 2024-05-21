@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import style from './Login.module.scss';
 
@@ -15,12 +16,14 @@ interface UsernameFormElement extends HTMLFormElement {
 }
 
 export const Login: React.FC = () => {
+	const navigate = useNavigate();
+
 	const [errors, setErrors] = useState({
 		emailIsEmpty: false,
 		passwordIsEmpty: false,
 	});
 
-	const handleSubmit = (e: React.FormEvent<UsernameFormElement>) => {
+	const handleSubmit = async (e: React.FormEvent<UsernameFormElement>) => {
 		e.preventDefault();
 
 		const target = e.currentTarget.elements;
@@ -28,10 +31,42 @@ export const Login: React.FC = () => {
 		const email = target.email.value.trim();
 		const password = target.password.value.trim();
 
-		setErrors({
+		const newErrors = {
 			emailIsEmpty: !email,
 			passwordIsEmpty: !password,
+		};
+
+		setErrors(newErrors);
+
+		if (Object.values(newErrors).some((error) => error)) {
+			return;
+		}
+
+		const userData = { email, password };
+
+		const response = await fetch('http://localhost:4000/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(userData),
 		});
+		const data = await response.json();
+		console.log(data);
+
+		if (!response.ok) {
+			alert(data.result);
+		}
+
+		if (data.successful) {
+			const userToken = data.result.split(' ')[1];
+			localStorage.setItem('userToken', userToken);
+
+			target.email.value = '';
+			target.password.value = '';
+
+			navigate('/private');
+		}
 	};
 
 	const resetError = () => {
@@ -43,7 +78,7 @@ export const Login: React.FC = () => {
 
 	return (
 		<form onSubmit={handleSubmit} onBlur={resetError} className={style.form}>
-			<h2 className={style.formTitle}>Login</h2>
+			<h2 className={style.formTitle}>Log in</h2>
 
 			<div className={style.formContent}>
 				<div className={style.formContent__wrapper}>
@@ -74,15 +109,15 @@ export const Login: React.FC = () => {
 
 					<Button
 						className={style.button}
-						buttonText={'Login'}
+						buttonText={'log in'}
 						buttonType='submit'
 					/>
 
 					<span className={style.text}>
 						If you don't have an account you may{' '}
-						<a className={style.link} href='#'>
+						<Link className={style.link} to='/registration'>
 							register
-						</a>
+						</Link>
 					</span>
 				</div>
 			</div>

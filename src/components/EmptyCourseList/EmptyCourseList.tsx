@@ -1,9 +1,9 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 
 import style from './EmptyCourseList.module.scss';
 
-export default function EmptyCourseList() {
+const EmptyCourseList: React.FC = () => {
 	return (
 		<>
 			<div className={style.container}>
@@ -11,12 +11,16 @@ export default function EmptyCourseList() {
 				<h3 className={style.subheading}>
 					Please use "Add New Course" button to add your first course
 				</h3>
-				<Button
-					className={`button ${style.button}`}
-					buttonText='Add New Course'
-					onClick={() => console.log()}
-				/>
+				<Link to={'/courses/add'}>
+					<Button
+						className={`button ${style.button}`}
+						buttonText='Add New Course'
+						onClick={() => console.log()}
+					/>
+				</Link>
 			</div>
 		</>
 	);
-}
+};
+
+export default EmptyCourseList;

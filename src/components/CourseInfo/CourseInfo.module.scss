@@ -1,5 +1,5 @@
 .courseInfo {
-
+  max-width: 70rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -62,9 +62,11 @@
     }
   }
   
+ .buttonLink {
+  align-self: flex-end;
   .button {
     width: 11.5625rem;
     height: 3.125rem;
-    align-self: flex-end;
   }
+ }
 }

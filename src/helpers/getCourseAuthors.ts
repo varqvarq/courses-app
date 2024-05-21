@@ -1,9 +1,6 @@
 import { IAuthor } from '../components/Courses/Courses';
 
-export default function getAuthors(
-	courseAuthors: string[],
-	authors: IAuthor[]
-): string {
+const getAuthors = (courseAuthors: string[], authors: IAuthor[]): string => {
 	return courseAuthors
 		.map((courseAuthor) => {
 			const author = authors.find((author) => {
@@ -12,4 +9,6 @@ export default function getAuthors(
 			return author ? author.name : '';
 		})
 		.join(', ');
-}
+};
+
+export default getAuthors;

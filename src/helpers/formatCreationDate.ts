@@ -1,3 +1,5 @@
-export default function formatDate(date: string): string {
+const formatDate = (date: string): string => {
 	return date.replaceAll('/', '.');
-}
+};
+
+export default formatDate;

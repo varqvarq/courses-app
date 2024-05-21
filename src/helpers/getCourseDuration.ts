@@ -1,18 +1,12 @@
-export default function getDuration(duration: number): string {
-	let hour = Math.floor(duration / 60).toString();
-	let minutes = (duration % 60).toString();
+const getDuration = (duration: number): string => {
+	let hh = Math.floor(duration / 60).toString();
+	let mm = (duration % 60).toString();
 
-	if (+hour < 10) {
-		hour = '0' + hour;
-	}
+	hh = +hh < 10 ? `0${hh}` : hh;
 
-	if (+minutes < 10) {
-		minutes = '0' + minutes;
-	}
+	mm = +mm < 10 ? `0${mm}` : mm;
 
-	if (+hour === 1) {
-		return `${hour}:${minutes} hour`;
-	}
+	return +hh === 1 ? `${hh}:${mm} hour` : `${hh}:${mm} hours`;
+};
 
-	return `${hour}:${minutes} hours`;
-}
+export default getDuration;

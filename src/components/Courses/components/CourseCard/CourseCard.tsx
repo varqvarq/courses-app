@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import formatDate from '../../../../helpers/formatCreationDate';
 import getDuration from '../../../../helpers/getCourseDuration';
 
@@ -11,14 +13,9 @@ import getAuthors from '../../../../helpers/getCourseAuthors';
 interface CourseCardProps {
 	course: ICourse;
 	authors: IAuthor[];
-	showCourseInfo: () => void;
 }
 
-const CourseCard: React.FC<CourseCardProps> = ({
-	course,
-	authors,
-	showCourseInfo,
-}) => {
+const CourseCard: React.FC<CourseCardProps> = ({ course, authors }) => {
 	return (
 		<div className={style.container}>
 			<div className={style.wrapper}>
@@ -45,11 +42,12 @@ const CourseCard: React.FC<CourseCardProps> = ({
 						</p>
 					</div>
 
-					<Button
-						className={`button ${style.button}`}
-						buttonText={'show course'}
-						onClick={showCourseInfo}
-					/>
+					<Link to={`/courses/${course.id}`}>
+						<Button
+							className={`button ${style.button}`}
+							buttonText={'show course'}
+						/>
+					</Link>
 				</div>
 			</div>
 		</div>
