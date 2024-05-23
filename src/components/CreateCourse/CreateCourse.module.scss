@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
 
-  &__title {
+  .formTitle {
     margin-bottom: 20px;
     font-weight: 700;
     font-size: 32px;
@@ -12,7 +12,7 @@
     color: #333e48;
   }
 
-  &__content{
+  .formContent{
     display: flex;
     flex-direction: column;
     border: 1px solid hsl(0, 0%, 81%);
@@ -21,8 +21,7 @@
     padding: 2.625rem 5rem 5rem 5rem;
     margin-bottom: 2rem;
 
-    .wrapper {
-      max-width: 60.4375rem;
+  
 
       .subheading {
         width: fit-content;
@@ -34,38 +33,33 @@
         margin-bottom: 1.5625rem
       }
   
-      .titleInput {
-        width: 59rem;
+
+      .duration {
+        margin-bottom: 2rem;
       }
-  
-      .descriptionArea {
-        width: 59rem;
-        min-height: 9.5rem;
-        text-wrap: wrap;
-      }
-    
-      .durationWrapper {
-  
-        .durationInput {
-          width: 25rem;
-          margin-right: .9375rem;
-        }
-      }
+      
   
       .authorsSection {
         display: flex;
         justify-content: space-between;
 
         .authorsList {
+          display: flex;
+          flex-direction: column;
   
-          .authorsInput {
-            width: 25rem;
-            margin-right: .9375rem;
-            margin-bottom: 2rem;
-          }
-    
-          .authorsButton {
-            width: 11.5625rem;
+          .createAuthor {
+            width: 100%;
+            display: flex;
+
+            .authorsInput {
+              width: 25rem;
+              margin-right: .9375rem;
+              margin-bottom: 2rem;
+            }
+      
+            .authorsButton {
+              width: 11.5625rem;
+            }
           }
   
           .authorsSubheading {
@@ -118,8 +112,6 @@
         visibility: visible;
       }
     }
-    
-    
   }
 
   .buttonsWrapper {
@@ -131,5 +123,4 @@
       width: 11.5625rem;
       margin-bottom: 8.125rem;
     }
-  }
 }

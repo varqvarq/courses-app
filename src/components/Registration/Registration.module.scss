@@ -27,6 +27,14 @@
       display: flex;
       flex-direction: column;
       max-width: 17.875rem;
+
+      .input {
+        width: 100%;
+      }
+
+      .inputElement {
+        margin-bottom: 2rem;
+      }
       
       .error {
         border-color: red;
@@ -47,6 +55,15 @@
   
       .button {
         margin-bottom: 2.1875rem;
+      }
+
+      .bottomText {
+        text-align: center;
+      }
+
+      .green {
+        color: green;
+        font-weight: 700;
       }
   
       .link {

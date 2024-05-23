@@ -1,0 +1,13 @@
+@import '../../mixins.scss';
+
+.subheading {
+  @include createCourseHeading;
+}
+
+.placeholder {
+  text-align: center;
+}
+
+.error {
+  color: red;
+}

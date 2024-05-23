@@ -9,9 +9,22 @@
   padding: 0px 30px 0px 20px;
   margin-bottom: 3.125rem;
 
+  .loginWrapper {
+    display: flex;
+    align-items: center;
 
-  .button {
-    width: 8.75rem;
+    .userName {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 143%;
+      text-align: right;
+      color: #333e48;
+      margin-right: 1.5625rem;  
+    }
+  
+    .button {
+      width: 8.75rem;
+    }
   }
 }
 

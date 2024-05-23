@@ -14,9 +14,9 @@
   }   
   
   .formContent {
+    padding-top: 4.6875rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     width: 36.5625rem;
     height: 29.8125rem;
@@ -24,34 +24,28 @@
     border-radius: .25rem;
     background-color: #FFFF;
 
-    &__wrapper {
+    .formContentWrapper {
       max-width: 17.8125rem;
       display: flex;
       flex-direction: column;
 
-      .error {
-        border-color: red;
+      .email {
+        margin-bottom: 2.125rem;
+      }
+      .emailInput {
+        width: 100%;
       }
 
-      .errorMessage {
-        visibility: hidden;
-        min-height: 34px;
-
-        &:nth-of-type(2) {
-          min-height: 54px;
-        }
+      .password {
+        margin-bottom: 3.375rem;
       }
 
-      .errorMessage.active {
-        visibility: visible;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 125%;
-        color: #f00;
+      .passwordInput {
+        width: 100%;
       }
 
       .button {
-        margin-bottom: 2.375rem;
+        margin-bottom: 2.125rem;
       }
 
       .text {

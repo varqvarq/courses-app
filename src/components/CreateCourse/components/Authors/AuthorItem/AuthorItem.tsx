@@ -1,11 +1,11 @@
-import Button from '../../../../common/Button/Button';
+import Button from '../../../../../common/Button/Button';
 import style from './AuthorItem.module.scss';
 
 interface Props {
 	authorName: string;
 	addButton?: boolean;
-	deleteButton?: boolean;
-	onDelete?: () => void;
+	removeButton?: boolean;
+	onRemove?: () => void;
 	onAdd?: () => void;
 }
 
@@ -22,11 +22,11 @@ const AuthorItem: React.FC<Props> = (props) => {
 				</>
 			)}
 
-			{props.deleteButton && (
+			{props.removeButton && (
 				<>
 					<Button
-						className={`${style.deleteButton} ${style.button}`}
-						onClick={props.onDelete}
+						className={`${style.removeButton} ${style.button}`}
+						onClick={props.onRemove}
 					/>
 				</>
 			)}

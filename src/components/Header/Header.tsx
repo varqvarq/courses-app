@@ -7,10 +7,13 @@ import style from './Header.module.scss';
 
 const Header: React.FC = () => {
 	const navigate = useNavigate();
-	const isAuth = localStorage.getItem('userToken');
+
+	const userInfo = localStorage.getItem('userInfo');
+	const isAuth = userInfo ? JSON.parse(userInfo) : '';
+
 	const handleLogOut = () => {
 		if (isAuth) {
-			localStorage.removeItem('userToken');
+			localStorage.removeItem('userInfo');
 		}
 		navigate('/login');
 	};
@@ -20,11 +23,14 @@ const Header: React.FC = () => {
 			<Link to='/'>
 				<Logo />
 			</Link>
-			<Button
-				className={`button ${style.button}`}
-				buttonText={`${isAuth ? 'log out' : 'log in'}`}
-				onClick={handleLogOut}
-			/>
+			<div className={style.loginWrapper}>
+				<p className={style.userName}>{isAuth.userName}</p>
+				<Button
+					className={`button ${style.button}`}
+					buttonText={`${isAuth ? 'log out' : 'log in'}`}
+					onClick={handleLogOut}
+				/>
+			</div>
 		</header>
 	);
 };

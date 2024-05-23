@@ -15,19 +15,16 @@ const App: React.FC = () => (
 	<div className={style.app}>
 		<Header />
 		<Routes>
+			<Route path='/' element={<Navigate to='/courses' />} />
 			<Route path='/login' element={<Login />} />
 			<Route path='/registration' element={<Registration />} />
-			<Route path='/courses/add' element={<CreateCourse />} />
-			<Route path='/courses/:courseId' element={<CourseInfo />} />
-			<Route
-				path='/'
-				element={
-					<PrivateRoute>
-						<Courses />
-					</PrivateRoute>
-				}
-			/>
-			<Route path='*' element={<Navigate to='/' />} />
+			<Route path='/courses' element={<PrivateRoute />}>
+				<Route path='' element={<Courses />} />
+				<Route path='*' element={<Navigate to='/courses' />} />
+				<Route path='add' element={<CreateCourse />} />
+				<Route path=':courseId' element={<CourseInfo />} />
+			</Route>
+			<Route path='*' element={<Navigate to='/courses' />} />
 		</Routes>
 	</div>
 );

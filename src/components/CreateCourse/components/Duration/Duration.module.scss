@@ -1,0 +1,9 @@
+@import '../mixins.scss';
+
+.heading {
+  @include createCourseHeading;
+}
+
+  .input {
+    width: 25rem;
+  }

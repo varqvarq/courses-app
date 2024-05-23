@@ -16,13 +16,16 @@ interface UsernameFormElement extends HTMLFormElement {
 	readonly elements: FormElements;
 }
 
+const initialErrors = {
+	nameError: '',
+	emailError: '',
+	passwordError: '',
+};
+
 const Registration: React.FC = () => {
 	const navigate = useNavigate();
-	const [errors, setErrors] = useState({
-		nameIsEmpty: false,
-		emailIsEmpty: false,
-		passwordIsEmpty: false,
-	});
+	const [errors, setErrors] = useState(initialErrors);
+	const [success, setSuccess] = useState(false);
 
 	const handleSubmit = async (e: React.FormEvent<UsernameFormElement>) => {
 		e.preventDefault();
@@ -34,9 +37,13 @@ const Registration: React.FC = () => {
 		const password = target.password.value.trim();
 
 		const newErrors = {
-			nameIsEmpty: !name,
-			emailIsEmpty: !email,
-			passwordIsEmpty: !password,
+			nameError: name ? '' : 'Name is required',
+			emailError: email ? '' : 'Email is required',
+			passwordError: !password
+				? 'Password required'
+				: password.length < 6
+					? 'Password lenght should be at least 6 characters'
+					: '',
 		};
 
 		setErrors(newErrors);
@@ -45,34 +52,40 @@ const Registration: React.FC = () => {
 			return;
 		}
 
-		const userData = { name, email, password };
+		const userData = { name, email: email.toLowerCase(), password };
 
-		const response = await fetch('http://localhost:4000/register', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(userData),
-		});
-		const data = await response.json();
+		try {
+			const response = await fetch('http://localhost:4000/register', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(userData),
+			});
 
-		if (!response.ok) {
-			alert(data.errors);
-			return;
+			const data = await response.json();
+
+			if (!response) {
+				alert('server is not available');
+			}
+
+			if (!response.ok) {
+				alert(data.errors);
+				return;
+			}
+
+			target.name.value = '';
+			target.email.value = '';
+			target.password.value = '';
+			// navigate('/login');
+			setSuccess(true);
+		} catch (e) {
+			alert(e);
 		}
-
-		target.name.value = '';
-		target.email.value = '';
-		target.password.value = '';
-		navigate('/login');
 	};
 
 	const resetErrors = () => {
-		setErrors({
-			nameIsEmpty: false,
-			emailIsEmpty: false,
-			passwordIsEmpty: false,
-		});
+		setErrors(initialErrors);
 	};
 
 	return (
@@ -85,40 +98,28 @@ const Registration: React.FC = () => {
 						inputId={'name'}
 						labelText={'name'}
 						inputType={'text'}
-						className={`${errors.nameIsEmpty && style.error}`}
+						className={style.inputElement}
+						inputClassName={style.input}
+						errorMessage={errors.nameError}
 					/>
-
-					<span
-						className={`${style.errorMessage} ${errors.nameIsEmpty && style.active}`}
-					>
-						Names is required
-					</span>
 
 					<Input
 						inputId={'email'}
 						labelText={'email'}
 						inputType={'email'}
-						className={`${errors.emailIsEmpty && style.error}`}
+						className={style.inputElement}
+						inputClassName={style.input}
+						errorMessage={errors.emailError}
 					/>
-
-					<span
-						className={`${style.errorMessage} ${errors.emailIsEmpty && style.active}`}
-					>
-						Email is required
-					</span>
 
 					<Input
 						inputId={'password'}
 						labelText={'password'}
 						inputType={'password'}
-						className={`${errors.passwordIsEmpty && style.error}`}
+						className={style.inputElement}
+						inputClassName={style.input}
+						errorMessage={errors.passwordError}
 					/>
-
-					<span
-						className={`${style.errorMessage} ${errors.passwordIsEmpty && style.active}`}
-					>
-						Password is required
-					</span>
 
 					<Button
 						className={style.button}
@@ -126,8 +127,10 @@ const Registration: React.FC = () => {
 						buttonType='submit'
 					/>
 
-					<span>
-						If you have an account you may{' '}
+					<span className={`${style.bottomText} ${success && style.green}`}>
+						{success
+							? 'Registration сompleted successfuly now you can '
+							: 'If you have an account you may '}
 						<Link className={style.link} to='/login'>
 							log in
 						</Link>
