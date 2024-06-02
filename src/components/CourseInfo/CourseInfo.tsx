@@ -1,23 +1,24 @@
-import { Link, useParams } from 'react-router-dom';
-
+import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import style from './CourseInfo.module.scss';
-
-import {
-	copytAuthorsList as authors,
-	copyCoursesList as courses,
-} from '../CreateCourse/CreateCourse';
 
 import {
 	getDuration,
 	formatDate,
-	getAuthors,
+	findAuthors,
 	findCourse,
 	formatId,
 } from '../../helpers';
-
 import Button from '../../common/Button/Button';
+import { useAppSelector } from '../../hooks/useTypedSelector';
+import { selectCourses } from '../../store/courses/coursesSlice';
+import { selectAuthors } from '../../store/authors/authorSlice';
 
 const CourseInfo: React.FC = () => {
+	const courses = useAppSelector(selectCourses);
+	const authors = useAppSelector(selectAuthors);
+
+	const navigate = useNavigate();
 	const params = useParams();
 	const courseId = params.courseId;
 
@@ -31,35 +32,43 @@ const CourseInfo: React.FC = () => {
 		<div className={style.courseInfo}>
 			<h2 className={style.title}>{course.title}</h2>
 
-			<div className={style.content}>
-				<div className={style.leftSection}>
-					<p className={style.label}>Description: </p>
-					<br />
-					<article className={style.descriptionText}>
-						{course.description}
-					</article>
-				</div>
+			<div className={style.wrapper}>
+				<div className={style.content}>
+					<div className={style.leftSection}>
+						<p className={style.label}>Description:</p>
+						<br />
 
-				<div className={style.divider}></div>
+						<article className={style.descriptionText}>
+							{course.description}
+						</article>
+					</div>
 
-				<div className={style.rightSection}>
-					<p className={style.label}>ID:</p>
-					<p className={style.label}>Duration:</p>
-					<p className={style.label}>Created:</p>
-					<p className={style.label}>Authors:</p>
+					<div className={style.divider}></div>
 
-					<p className={style.value}>{formatId(course.id)}</p>
-					<p className={style.value}>
-						<b>{getDuration(course.duration).split(' ')[0]} </b>
-						{getDuration(course.duration).split(' ')[1]}
-					</p>
-					<p className={style.value}>{formatDate(course.creationDate)}</p>
-					<p className={style.value}>{getAuthors(course.authors, authors)}</p>
+					<div className={style.rightSection}>
+						<p className={style.label}>ID:</p>
+						<p className={style.value}>{formatId(course.id)}</p>
+
+						<p className={style.label}>Duration:</p>
+						<p className={style.value}>
+							<b>{getDuration(course.duration).split(' ')[0]} </b>
+							{getDuration(course.duration).split(' ')[1]}
+						</p>
+						<p className={style.label}>Created:</p>
+						<p className={style.value}>{formatDate(course.creationDate)}</p>
+
+						<p className={style.label}>Authors:</p>
+						<p className={style.value}>
+							{findAuthors(course.authors, authors)}
+						</p>
+					</div>
 				</div>
 			</div>
-			<Link className={style.buttonLink} to='/'>
-				<Button className={style.button} buttonText={'back'} />
-			</Link>
+			<Button
+				className={style.button}
+				buttonText={'back'}
+				onClick={() => navigate(-1)}
+			/>
 		</div>
 	);
 };

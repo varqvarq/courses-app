@@ -9,7 +9,8 @@
 }
 
 .titleInput {
-  width: 59rem;
+  max-width: 59rem;
+  width: 100%;
 }
 
 
@@ -18,6 +19,13 @@
 }
 
 .descriptionArea {
-  width: 59rem;
+  max-width: 59rem;
+  width: 100%;
   text-wrap: wrap;
+}
+
+@media only screen and (max-width: 768px) {
+  .description {
+    margin-bottom: 1rem;
+  }
 }

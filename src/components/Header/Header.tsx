@@ -1,36 +1,45 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
 
 import style from './Header.module.scss';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypedSelector';
+import { removeUser, selectUser } from '../../store/user/userSlice';
 
 const Header: React.FC = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
+	const dispatch = useAppDispatch();
 
-	const userInfo = localStorage.getItem('userInfo');
-	const isAuth = userInfo ? JSON.parse(userInfo) : '';
+	const userInfo = useAppSelector(selectUser);
+
+	const loginOrRegister =
+		location.pathname === '/login' || location.pathname === '/register';
 
 	const handleLogOut = () => {
-		if (isAuth) {
-			localStorage.removeItem('userInfo');
+		if (userInfo.isAuth) {
+			localStorage.removeItem('userToken');
+			dispatch(removeUser());
+			navigate('/login');
 		}
-		navigate('/login');
 	};
 
 	return (
 		<header className={style.header}>
 			<Link to='/'>
-				<Logo />
+				<Logo className={style.logo} />
 			</Link>
-			<div className={style.loginWrapper}>
-				<p className={style.userName}>{isAuth.userName}</p>
-				<Button
-					className={`button ${style.button}`}
-					buttonText={`${isAuth ? 'log out' : 'log in'}`}
-					onClick={handleLogOut}
-				/>
-			</div>
+			{!loginOrRegister && (
+				<div className={style.loginWrapper}>
+					<p className={style.userName}>{userInfo.name}</p>
+					<Button
+						className={`button ${style.button}`}
+						buttonText={`${userInfo.isAuth ? 'log out' : 'log in'}`}
+						onClick={handleLogOut}
+					/>
+				</div>
+			)}
 		</header>
 	);
 };

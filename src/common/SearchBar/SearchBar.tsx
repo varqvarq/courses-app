@@ -3,8 +3,6 @@ import Button from '../Button/Button';
 
 import style from './SearchBar.module.scss';
 import { useState } from 'react';
-import { on } from 'events';
-
 interface SearchBarProps {
 	onSearch: (query: string) => void;
 }
@@ -40,6 +38,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 				inputClassName={style.searchInput}
 				onChange={handleInputChange}
 				onKeyDown={handleKeyDown}
+				wrap
 				rightElement={
 					<Button
 						buttonText={'search'}

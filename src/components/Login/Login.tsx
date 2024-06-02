@@ -5,6 +5,8 @@ import style from './Login.module.scss';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
+import { useAppDispatch } from '../../hooks/useTypedSelector';
+import { setUser, UserType } from '../../store/user/userSlice';
 
 interface FormElements extends HTMLFormControlsCollection {
 	email: HTMLInputElement;
@@ -24,6 +26,9 @@ export const Login: React.FC = () => {
 	const navigate = useNavigate();
 
 	const [errors, setErrors] = useState(initialErrors);
+	const [disabled, setDisabled] = useState(false);
+
+	const dispatch = useAppDispatch();
 
 	const handleSubmit = async (e: React.FormEvent<UsernameFormElement>) => {
 		e.preventDefault();
@@ -50,7 +55,9 @@ export const Login: React.FC = () => {
 		const userData = { email: email.toLowerCase(), password };
 
 		try {
-			const response = await fetch('http://localhost:4000/login', {
+			setDisabled(true);
+
+			const response = await fetch('http://localhost	:4000/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -61,24 +68,27 @@ export const Login: React.FC = () => {
 			const data = await response.json();
 
 			if (!response.ok) {
+				setDisabled(false);
 				alert(data.result);
 				return;
 			}
 
-			if (!data.successful) {
-				alert(data);
-				return;
-			}
-			const userName = data.user.name;
-			const userToken = data.result.split(' ')[1];
+			const userInfo: UserType = {
+				isAuth: true,
+				name: data.user.name,
+				email: data.user.email,
+				token: data.result,
+			};
 
-			const userInfo = JSON.stringify({ userName, userToken });
-			localStorage.setItem('userInfo', userInfo);
+			dispatch(setUser(userInfo));
+
+			localStorage.setItem('userToken', userInfo.token);
 
 			target.email.value = '';
 			target.password.value = '';
 			navigate('/');
 		} catch (e) {
+			setDisabled(false);
 			alert(e);
 			return;
 		}
@@ -115,11 +125,12 @@ export const Login: React.FC = () => {
 						className={style.button}
 						buttonText={'log in'}
 						buttonType='submit'
+						disabled={disabled}
 					/>
 
 					<span className={style.text}>
 						If you don't have an account you may{' '}
-						<Link className={style.link} to='/registration'>
+						<Link className={style.link} to='/register'>
 							register
 						</Link>
 					</span>

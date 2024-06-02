@@ -6,7 +6,14 @@ const getDuration = (duration: number): string => {
 
 	mm = +mm < 10 ? `0${mm}` : mm;
 
-	return +hh === 1 ? `${hh}:${mm} hour` : `${hh}:${mm} hours`;
+	switch (+hh) {
+		case 1:
+			return `${hh}:${mm} hour`;
+		case 0:
+			return `${hh}:${mm} minutes`;
+		default:
+			return `${hh}:${mm} hours`;
+	}
 };
 
 export default getDuration;

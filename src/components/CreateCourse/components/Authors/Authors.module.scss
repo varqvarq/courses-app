@@ -1,16 +1,85 @@
 @import '../mixins.scss';
 
 .authorsContainer {
-
+  width: 100%;
   display:  flex;
   justify-content: space-between;
 
-  .authorList {
-
-    .subheading {
-      @include createCourseHeading;
-    }
-
+  .subheading {
+    @include createCourseHeading;
+    text-wrap: nowrap;
   }
   
+  
+  .authorsList {
+    width: 100%;
+
+    .createAuthor {
+      margin-bottom: 2rem;
+    }
+    
+    .createAuthorInput {
+      max-width: 25rem;
+      width: 100%;
+    }
+    
+    .createAuthorButton {
+      max-width: 11.5625rem;
+      width: 100%;
+    }
+
+    .authorsSubheading {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 100%;
+      color: #333e48;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .courseAuthorsList {
+
+    .placeholder {
+      text-align: center;
+    }
+    
+    .error {
+      color: red;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  
+  .authorsContainer {
+    flex-wrap: wrap;
+
+    .authorsList {
+      margin-bottom: 2rem;
+
+      .createAuthorInput {
+        margin-right: 0;
+        width: 100%;
+        max-width: 100vw;
+      }
+  
+      .createAuthorButton {
+        max-width: 100vw;
+        width: 100%;
+      }
+    }
+
+    .courseAuthorsList {
+
+      .subheading {
+        margin-bottom: 1rem;
+      }
+    
+      .placeholder {
+        text-align: left;
+      }
+    }
+
+    
+  }
 }

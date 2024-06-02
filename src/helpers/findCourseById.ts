@@ -1,9 +1,9 @@
-import { ICourse } from '../components/Courses/Courses';
+import { CourseType } from '../store/courses/coursesSlice';
 
 const findCourse = (
 	courseId: string | undefined,
-	courses: ICourse[]
-): ICourse | undefined => {
+	courses: CourseType[]
+): CourseType | undefined => {
 	return courses.find((course) => course.id === courseId);
 };
 

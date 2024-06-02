@@ -29,9 +29,9 @@ const Duration: React.FC<DurationProps> = ({ onError, className }) => {
 				inputType='text'
 				labelText='duration'
 				labelType='small'
-				className={className}
-				inputClassName={style.input}
-				placeholderText='input number'
+				className={`${style.duration} ${className}`}
+				inputClassName={style.durationInput}
+				placeholderText='Input number'
 				onChange={handleDuration}
 				errorMessage={onError}
 				rightElement={

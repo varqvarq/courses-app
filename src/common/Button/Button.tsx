@@ -5,6 +5,8 @@ interface ButtonInterface {
 	buttonText?: string;
 	buttonType?: 'button' | 'submit' | 'reset';
 	onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
+	disabled?: boolean;
+	children?: React.ReactNode;
 }
 
 const Button: React.FC<ButtonInterface> = ({
@@ -12,14 +14,18 @@ const Button: React.FC<ButtonInterface> = ({
 	buttonText,
 	buttonType = 'button',
 	onClick,
+	disabled = false,
+	children,
 }) => {
 	return (
 		<button
 			className={`${style.button} ${className}`}
 			type={buttonType}
 			onClick={onClick}
+			disabled={disabled}
 		>
-			{buttonText}
+			{disabled ? '...Loading' : buttonText}
+			{children}
 		</button>
 	);
 };

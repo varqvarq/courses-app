@@ -12,19 +12,24 @@ html {
 
 
 body {
-  /* margin: 0 auto; */
+  margin: 0 auto;
   font-family: 'Open Sans';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333E48;
   background-color: #F8F8F8;
-}
-
-article {
   font-weight: 400;
   font-size: 1rem;
+  overflow: scroll;
   line-height: 1.25rem;
 }
+
+
+// @media only screen and (max-width: 587px) {
+//   body {
+//     font-size: 14px;
+//   }
+// }
 
 
 

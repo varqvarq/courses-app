@@ -1,11 +1,5 @@
-import { useState } from 'react';
-import {
-	Link,
-	Navigate,
-	Outlet,
-	useLocation,
-	useNavigate,
-} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import style from './Courses.module.scss';
 
@@ -13,36 +7,44 @@ import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from '../../common/SearchBar/SearchBar';
 import Button from '../../common/Button/Button';
 
-import {
-	copyCoursesList as courses,
-	copytAuthorsList as authors,
-} from '../CreateCourse/components/Authors/Authors';
-
 import EmptyCourseList from '../EmptyCourseList/EmptyCourseList';
+import { useAppSelector, useAppDispatch } from '../../hooks/useTypedSelector';
 
-export interface ICourse {
-	id: string;
-	title: string;
-	description: string;
-	creationDate: string;
-	duration: number;
-	authors: string[];
-}
-
-export interface IAuthor {
-	id: string;
-	name: string;
-}
+import { getAuthors, getCourses } from '../../services';
+import {
+	CourseType,
+	saveCourses,
+	selectCourses,
+} from '../../store/courses/coursesSlice';
+import { saveAuthors, selectAuthors } from '../../store/authors/authorSlice';
 
 const Courses: React.FC = () => {
-	const [searchResults, setSearchResults] = useState<ICourse[]>(courses);
+	const courses = useAppSelector(selectCourses);
+	const authors = useAppSelector(selectAuthors);
+	const dispatch = useAppDispatch();
+
+	const location = useLocation();
+	const navigate = useNavigate();
+	const [searchResults, setSearchResults] = useState<CourseType[]>(courses);
+
+	const isCourses = location.pathname == '/courses';
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const coursesData: CourseType[] = await getCourses();
+			dispatch(saveCourses(coursesData));
+
+			const authorsData = await getAuthors();
+			dispatch(saveAuthors(authorsData));
+		};
+		fetchData();
+	}, []);
+
+	useEffect(() => {
+		setSearchResults(courses);
+	}, [courses]);
 
 	const handleSearch = (query: string) => {
-		if (!query) {
-			setSearchResults(courses);
-			return;
-		}
-
 		const queryLowerCase = query.toLowerCase();
 
 		const filteredCourses = courses.filter(
@@ -50,27 +52,36 @@ const Courses: React.FC = () => {
 				course.title.toLowerCase().includes(queryLowerCase) ||
 				course.id.toLowerCase().includes(queryLowerCase)
 		);
+
 		setSearchResults(filteredCourses.length ? filteredCourses : courses);
 	};
+
 	return (
 		<div className={style.courses}>
-			{searchResults.length ? (
-				<div>
-					<div className={style.coursesTop}>
-						<SearchBar onSearch={handleSearch} />
-						<Link to='/courses/add'>
-							<Button
-								className={style.addCourseBtn}
-								buttonText='add new course'
-							/>
-						</Link>
-					</div>
-					{searchResults.map((course) => (
-						<CourseCard key={course.id} course={course} authors={authors} />
-					))}
-				</div>
+			{isCourses ? (
+				<>
+					{searchResults.length ? (
+						<div className={style.wrapper}>
+							<div className={style.coursesTop}>
+								<SearchBar onSearch={handleSearch} />
+								<Button
+									className={style.addCourseBtn}
+									buttonText='add new course'
+									onClick={() => {
+										navigate('/courses/add');
+									}}
+								/>
+							</div>
+							{searchResults.map((course) => (
+								<CourseCard key={course.id} course={course} authors={authors} />
+							))}
+						</div>
+					) : (
+						<EmptyCourseList />
+					)}
+				</>
 			) : (
-				<EmptyCourseList />
+				<Outlet />
 			)}
 		</div>
 	);

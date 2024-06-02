@@ -1,25 +1,40 @@
 .container {
-  width: 100%;
-  height: 15rem;
+  // width: 100%;
+  height: fit-content;
+  min-height: 15rem;
   box-shadow: 2px 0 8px rgb(0, 0, 0, 0.25);
   margin-bottom: 32px;
   border-left: 7px solid #333E48;
   border-radius: 4px;
   display: flex;
-  padding: 30px;
-  justify-content: center;
+  // justify-content: center;
+  align-items: center;
   background-color: #FFFFFF;
+  flex-wrap: wrap;
 
   .wrapper {
-    display: flex;
-    align-items: flex-end;
-    height: 100%;
+    width: fit-content;
     width: 100%;
-    justify-content: space-between;
+    // height: fit-content;
+
+    display: flex;
+    // align-items: center;
+    align-items: flex-end;
+    gap: 2.9375rem;
+    justify-content: flex-start;
+    flex-shrink: 3;
+    padding: 20px 45px 20px 20px;
+    // flex-wrap: wrap;
+
 
     .leftSection {
+      width: 41.875rem;
+      // width: 100;
       display: flex;
       flex-direction: column;
+      // flex-shrink: 999;
+      // margin-right: 2.9375rem;
+      // margin-bottom: 20px;
   
       .title {
         margin-bottom: 10px;
@@ -29,35 +44,92 @@
       }
   
       .description {
-        width: 41.875rem;
+        // flex-grow: 1;
         height: 8.75rem;
         font-size: 1rem;
         line-height: 1.25rem;
         font-weight: 400;
+        // flex-shrink: 1;
+        // margin-right: 2.9375rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 7; /* Adjust this value for mobile view */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
       }
     }
   
     .rightSection {
       display: flex;
       flex-direction: column;
+      // align-self: flex-end;
       justify-content: space-between;
       height: 8.75rem;
-      width: 20rem;
+      max-width: 20rem;
+      // flex-shrink: 1;
+      width: 100%;
 
-      .authors {
-        width: 100%;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
+      .metadata {
+        
+
+        .authors {
+          width: 100%;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          flex-wrap: wrap;
+        }
       }
+      .buttonsWrapper {
+        display: flex;
+        gap: .625rem;
 
-      .button {
-        width: 11.25rem;
-      }   
+        .button {
+          width: 11.25rem;
+          // width: 100%;
+        }   
+        .removeCourseButton {
+          width: 60px;
+          height: 50px;
+        }
+        .editCourseButton {
+          width: 60px;
+          height: 50px;
+        }
+      }
     }
   }
 
    
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+    
+    .wrapper {
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 20px;
+
+      .rightSection {
+        height: 100%;
+        max-width: 100vw;
+
+        .metadata {
+          margin-bottom: 20px;
+        }
+
+        .buttonsWrapper {
+          .button {
+            max-width: 100vw;
+            width: 100%;
+        }
+        }
+      }
+    }
+  }
 }
 
 

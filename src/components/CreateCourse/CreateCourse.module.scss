@@ -12,7 +12,7 @@
     color: #333e48;
   }
 
-  .formContent{
+  .formContent {
     display: flex;
     flex-direction: column;
     border: 1px solid hsl(0, 0%, 81%);
@@ -20,8 +20,6 @@
     background-color: #FFFF;
     padding: 2.625rem 5rem 5rem 5rem;
     margin-bottom: 2rem;
-
-  
 
       .subheading {
         width: fit-content;
@@ -32,13 +30,11 @@
         color: #333e48;
         margin-bottom: 1.5625rem
       }
-  
 
       .duration {
         margin-bottom: 2rem;
       }
       
-  
       .authorsSection {
         display: flex;
         justify-content: space-between;
@@ -89,25 +85,6 @@
           }
         }
       }
-  
-      .error {
-        border-color: red;
-      }
-      
-  
-      .errorMessage {
-        visibility: hidden;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 125%;
-        color: #f00;
-        min-height: 32px;
-  
-        &:nth-of-type(1) {
-          min-height: 24px;
-        }
-      }
-  
       .errorMessage.active {
         visibility: visible;
       }
@@ -120,7 +97,35 @@
     justify-content: flex-end;
 
     .formButton {
-      width: 11.5625rem;
-      margin-bottom: 8.125rem;
+      max-width: 11.5625rem;
+      width: 100%;
+      margin-bottom: 50px;
     }
+}
+
+
+@media only screen and (max-width: 768px) {
+  .form {
+    // height: 100dvh;
+    .formTitle {
+      font-size: 1.7rem;
+    }
+
+    .formContent {
+      padding: 20px;
+
+      .duration {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .buttonsWrapper {
+    justify-content: space-between;
+    max-width: 100vw;
+
+    .formButton {
+      width: 50%;
+    }
+  }
 }

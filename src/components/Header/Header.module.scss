@@ -6,12 +6,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 30px 0px 20px;
-  margin-bottom: 3.125rem;
+  padding: 0px 20px;
+
+  .logo {
+    // max-width: 111px;
+    width: 100%;
+    min-width: 50px;
+  }
 
   .loginWrapper {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    max-width: 300px;
+    width: 100%;
+    gap: 1.5625rem;
+    flex-shrink: 3;
+    margin-left: 20px;
+
 
     .userName {
       font-weight: 600;
@@ -19,12 +31,37 @@
       line-height: 143%;
       text-align: right;
       color: #333e48;
-      margin-right: 1.5625rem;  
+      flex-wrap: wrap;
+      // margin-right: 1.5625rem;  
     }
   
     .button {
-      width: 8.75rem;
+        max-width: 8.75rem;
+        width: 100%;
+        flex-shrink: 3;
     }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .header {
+    padding: 0 15px;
+
+    .logo {
+      // width: auto;
+    }
+
+    .loginWrapper {
+      gap: 10px;
+      .button {
+        max-width: 100px;
+        height: 45px;
+        flex-shrink: 1;
+        // width: auto;
+        font-size: 10px;
+      }
+    }
+    
   }
 }
 

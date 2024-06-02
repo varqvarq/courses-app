@@ -13,7 +13,7 @@ interface Props {
 	onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 	errorMessage?: string;
 	rightElement?: React.ReactNode;
-	ref?: React.Ref<HTMLInputElement>;
+	wrap?: boolean;
 }
 
 const Input: React.FC<Props> = ({
@@ -29,18 +29,20 @@ const Input: React.FC<Props> = ({
 	onKeyDown,
 	errorMessage,
 	rightElement,
-	ref,
+	wrap,
 }) => {
 	return (
 		<div className={`${style.container} ${className}`}>
-			<label
-				htmlFor={inputId}
-				className={`${style.label} ${labelType ? style.smallLabel : ''}`}
-			>
-				{labelText}
-			</label>
+			{labelText && (
+				<label
+					htmlFor={inputId}
+					className={`${style.label} ${labelType ? style.smallLabel : ''}`}
+				>
+					{labelText}
+				</label>
+			)}
 
-			<div className={style.inputWrapper}>
+			<div className={`${style.inputWrapper} ${wrap && style.wrap}`}>
 				{inputType === 'textarea' ? (
 					<textarea
 						id={inputId}
@@ -56,7 +58,6 @@ const Input: React.FC<Props> = ({
 						value={value}
 						onChange={onChange}
 						onKeyDown={onKeyDown}
-						ref={ref}
 					/>
 				)}
 				{rightElement}

@@ -1,13 +1,46 @@
 .courses {
-  width: 70rem;
-  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column-reverse;
+  max-width: 72rem;
+  width: 100%;
+  padding: 20px;
   
-  .coursesTop {
+  .wrapper {
+    max-width: 72rem;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
 
-    .addCourseBtn {
-      width: 183px;
+    .coursesTop {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2.0625rem;
+      gap: 1rem;
+  
+      .addCourseBtn {
+        width: 183px;
+        flex-shrink: 3;
+      }
     }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .courses {
+    // height: 100dvh;
+    padding: 15px;
+
+   .wrapper {
+
+    .coursesTop {
+      flex-wrap: wrap;
+      flex-direction: column;
+
+      .addCourseBtn {
+        width: 100%;
+        align-self: flex-end;
+      }
+    }
+   }
   }
 }

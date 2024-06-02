@@ -1,6 +1,9 @@
-import { IAuthor } from '../components/Courses/Courses';
+import { AuthorType } from '../store/authors/authorSlice';
 
-const getAuthors = (courseAuthors: string[], authors: IAuthor[]): string => {
+const findAuthors = (
+	courseAuthors: string[],
+	authors: AuthorType[]
+): string => {
 	return courseAuthors
 		.map((courseAuthor) => {
 			const author = authors.find((author) => {
@@ -11,4 +14,4 @@ const getAuthors = (courseAuthors: string[], authors: IAuthor[]): string => {
 		.join(', ');
 };
 
-export default getAuthors;
+export default findAuthors;

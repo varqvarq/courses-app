@@ -1,24 +1,27 @@
 import { useState } from 'react';
+import uuid from 'react-uuid';
 
 import style from './Authors.module.scss';
 
-import CreateAuthor from './CreateAuthor/CreateAuthor';
+import authorSlice, {
+	AuthorType,
+	addAuthor,
+	removeAuthor,
+	selectAuthors,
+} from '../../../../store/authors/authorSlice';
 
-import { IAuthor, ICourse } from '../../../Courses/Courses';
-import AuthorsList from './AuthorsList/AuthorsList';
-import CourseAuthorsList from './CourseAuthorsList/CourseAuthorsList';
+import Input from '../../../../common/Input/Input';
+import Button from '../../../../common/Button/Button';
+import AuthorItem from './AuthorItem/AuthorItem';
 
 import {
-	mockedCoursesList as courses,
-	mockedAuthorsList as authors,
-} from '../../../../constant';
-
-export const copyCoursesList: ICourse[] = courses;
-export const copytAuthorsList: IAuthor[] = authors;
+	useAppDispatch,
+	useAppSelector,
+} from '../../../../hooks/useTypedSelector';
 
 interface AuthorsProps {
-	courseAuthors: IAuthor[];
-	setCourseAuthors: React.Dispatch<React.SetStateAction<IAuthor[]>>;
+	courseAuthors: AuthorType[];
+	setCourseAuthors: React.Dispatch<React.SetStateAction<AuthorType[]>>;
 	onError: boolean;
 }
 
@@ -27,58 +30,109 @@ const Authors: React.FC<AuthorsProps> = ({
 	setCourseAuthors,
 	onError,
 }) => {
-	const [authors, setAuthors] = useState<IAuthor[]>(copytAuthorsList);
+	const authors = useAppSelector(selectAuthors);
+	const dispatch = useAppDispatch();
 
-	const handleCreation = (author: IAuthor) => {
-		if (!authors.includes(author)) {
-			setAuthors([...authors, author]);
+	const [authorName, setAuthorName] = useState('');
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setAuthorName(e.target.value);
+	};
+
+	const handleAuthorCreation = () => {
+		if (!authorName.trim()) {
+			setAuthorName('');
+			return;
 		}
+		const newAuthor: AuthorType = {
+			name: authorName,
+			id: uuid(),
+		};
+
+		if (authors.includes(newAuthor)) {
+			return;
+		}
+
+		dispatch(addAuthor(newAuthor));
+		setAuthorName('');
 	};
 
 	const handleAuthorRemove = (id: string) => {
-		setAuthors((prev) => prev.filter((author) => author.id !== id));
+		dispatch(removeAuthor(id));
 	};
 
 	const handleCourseAuthorAdd = (id: string) => {
 		const newCourseAuthor = authors.find((author) => author.id === id);
 
 		if (newCourseAuthor && !courseAuthors.includes(newCourseAuthor)) {
-			handleAuthorRemove(id);
 			setCourseAuthors([...courseAuthors, newCourseAuthor]);
 		}
 	};
 
 	const handleCourseAuthorRemove = (id: string) => {
-		setCourseAuthors((prev) =>
-			prev.filter((courseAuthor) => courseAuthor.id !== id)
+		setCourseAuthors((prevCourseAuthors) =>
+			prevCourseAuthors.filter((prevCourseAuthor) => prevCourseAuthor.id !== id)
 		);
-
-		const removedCourseAuthor = copytAuthorsList.find(
-			(author) => author.id === id
-		);
-
-		removedCourseAuthor && handleCreation(removedCourseAuthor);
 	};
 
 	return (
 		<div className={style.authorsContainer}>
-			<div className={style.authorList}>
+			<div className={style.authorsList}>
 				<h3 className={style.subheading}>Authors</h3>
 
-				<CreateAuthor onCreate={handleCreation} />
-
-				<AuthorsList
-					authors={authors}
-					onRemove={handleAuthorRemove}
-					onAdd={handleCourseAuthorAdd}
+				<Input
+					inputId={'authorName'}
+					labelText={'author name'}
+					inputType={'text'}
+					className={`${style.createAuthor}`}
+					inputClassName={style.createAuthorInput}
+					labelType={'small'}
+					value={authorName}
+					onChange={handleInputChange}
+					wrap
+					rightElement={
+						<Button
+							className={style.createAuthorButton}
+							buttonText={'create author'}
+							onClick={handleAuthorCreation}
+						/>
+					}
 				/>
+				<h4 className={style.authorsSubheading}>Authors List</h4>
+
+				{authors.map((author) => {
+					return (
+						<AuthorItem
+							key={author.id}
+							authorName={author.name}
+							onAdd={() => {
+								handleCourseAuthorAdd(author.id);
+							}}
+							onRemove={() => handleAuthorRemove(author.id)}
+						/>
+					);
+				})}
 			</div>
 
-			<CourseAuthorsList
-				courseAuthors={courseAuthors}
-				onRemove={handleCourseAuthorRemove}
-				onError={onError}
-			/>
+			<div className={style.courseAuthorsList}>
+				<h3 className={style.subheading}>Course Authors</h3>
+
+				{courseAuthors.length ? (
+					courseAuthors.map((courseAuthor) => {
+						return (
+							<AuthorItem
+								key={courseAuthor.id}
+								authorName={courseAuthor.name}
+								onRemove={() => handleCourseAuthorRemove(courseAuthor.id)}
+							/>
+						);
+					})
+				) : (
+					<p className={`${style.placeholder} ${onError && style.error}`}>
+						Author list is empty
+					</p>
+				)}
+			</div>
 		</div>
 	);
 };

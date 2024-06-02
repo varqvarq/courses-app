@@ -25,7 +25,7 @@ const initialErrors = {
 const Registration: React.FC = () => {
 	const navigate = useNavigate();
 	const [errors, setErrors] = useState(initialErrors);
-	const [success, setSuccess] = useState(false);
+	const [disabled, setDisabled] = useState(false);
 
 	const handleSubmit = async (e: React.FormEvent<UsernameFormElement>) => {
 		e.preventDefault();
@@ -53,6 +53,7 @@ const Registration: React.FC = () => {
 		}
 
 		const userData = { name, email: email.toLowerCase(), password };
+		setDisabled(true);
 
 		try {
 			const response = await fetch('http://localhost:4000/register', {
@@ -65,22 +66,26 @@ const Registration: React.FC = () => {
 
 			const data = await response.json();
 
-			if (!response) {
-				alert('server is not available');
+			if (!response.ok) {
+				setDisabled(false);
+				alert(data.errors ? data.errors : 'Registration failed');
+				return;
 			}
 
-			if (!response.ok) {
-				alert(data.errors);
-				return;
+			if (!response) {
+				alert('error');
 			}
 
 			target.name.value = '';
 			target.email.value = '';
 			target.password.value = '';
-			// navigate('/login');
-			setSuccess(true);
+			navigate('/login');
+			setDisabled(false);
 		} catch (e) {
+			setDisabled(false);
 			alert(e);
+		} finally {
+			setDisabled(false);
 		}
 	};
 
@@ -125,12 +130,11 @@ const Registration: React.FC = () => {
 						className={style.button}
 						buttonText={'register'}
 						buttonType='submit'
+						disabled={disabled}
 					/>
 
-					<span className={`${style.bottomText} ${success && style.green}`}>
-						{success
-							? 'Registration сompleted successfuly now you can '
-							: 'If you have an account you may '}
+					<span className={`${style.bottomText}`}>
+						If you have an account you may{' '}
 						<Link className={style.link} to='/login'>
 							log in
 						</Link>

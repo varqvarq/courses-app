@@ -1,28 +1,19 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import uuid from 'react-uuid';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import style from './CreateCourse.module.scss';
 
-import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
-import AuthorItem from './components/Authors/AuthorItem/AuthorItem';
-import Duration from './components/Duration/Duration';
 import MainInfo from './components/MainInfo/MainInfo';
+import Duration from './components/Duration/Duration';
+import Authors from './components/Authors/Authors';
 
 import createDate from '../../helpers/createNewDate';
 
-import { ICourse, IAuthor } from '../Courses/Courses';
-
-import Authors from './components/Authors/Authors';
-
-import {
-	mockedCoursesList as courses,
-	mockedAuthorsList as authors,
-} from '../../constant';
-
-export const copyCoursesList: ICourse[] = courses;
-export const copytAuthorsList: IAuthor[] = authors;
+import { useDispatch } from 'react-redux';
+import { CourseType, addCourse } from '../../store/courses/coursesSlice';
+import { AuthorType } from '../../store/authors/authorSlice';
 
 interface FormElements extends HTMLFormControlsCollection {
 	title: HTMLInputElement;
@@ -44,8 +35,10 @@ const initialErrors = {
 const CreateCourse: React.FC = () => {
 	const navigate = useNavigate();
 
+	const dispatch = useDispatch();
+
 	const [errors, setErrors] = useState(initialErrors);
-	const [courseAuthors, setCourseAuthors] = useState<IAuthor[]>([]);
+	const [courseAuthors, setCourseAuthors] = useState<AuthorType[]>([]);
 
 	const handleSubmit = (e: React.FormEvent<UsernameFormElement>) => {
 		e.preventDefault();
@@ -76,7 +69,7 @@ const CreateCourse: React.FC = () => {
 			return;
 		}
 
-		const courseData: ICourse = {
+		const courseData: CourseType = {
 			id: uuid(),
 			title,
 			description,
@@ -85,15 +78,7 @@ const CreateCourse: React.FC = () => {
 			authors: courseAuthors.map((courseAuthors) => courseAuthors.id),
 		};
 
-		if (!copyCoursesList.includes(courseData)) {
-			copyCoursesList.push(courseData);
-		}
-
-		courseAuthors.forEach((author) => {
-			if (!copytAuthorsList.includes(author)) {
-				copytAuthorsList.push(author);
-			}
-		});
+		dispatch(addCourse(courseData));
 
 		navigate('/');
 	};
@@ -110,6 +95,7 @@ const CreateCourse: React.FC = () => {
 				<MainInfo onError={errors} />
 
 				<Duration className={style.duration} onError={errors.durationError} />
+
 				<Authors
 					courseAuthors={courseAuthors}
 					setCourseAuthors={setCourseAuthors}
@@ -118,9 +104,12 @@ const CreateCourse: React.FC = () => {
 			</div>
 
 			<div className={style.buttonsWrapper}>
-				<Link to='/'>
-					<Button buttonText={'cancel'} className={style.formButton} />
-				</Link>
+				<Button
+					buttonText={'cancel'}
+					className={style.formButton}
+					onClick={() => navigate(-1)}
+				/>
+
 				<Button
 					buttonText={'create course'}
 					className={style.formButton}
