@@ -23,7 +23,6 @@ const Input: React.FC<Props> = ({
 	inputType,
 	labelText,
 	labelType,
-	name,
 	className,
 	inputClassName,
 	value,

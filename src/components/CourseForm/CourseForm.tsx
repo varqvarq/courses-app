@@ -12,13 +12,12 @@ import {
 	CourseType,
 	CourseTypeNew,
 	addCourseToServer,
-	editCourse,
 	editCourseOnServer,
+	fetchCourses,
 	selectCourses,
 } from '../../store/courses/coursesSlice';
 import { AuthorType, selectAuthors } from '../../store/authors/authorSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypedSelector';
-import { findAuthors } from '../../helpers';
 
 interface FormElements extends HTMLFormControlsCollection {
 	title: HTMLInputElement;
@@ -49,7 +48,8 @@ const initialCourseData = {
 const CourseForm: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const courses = useAppSelector(selectCourses);
+	const { list } = useAppSelector(selectCourses);
+	const courses = list;
 	const authors = useAppSelector(selectAuthors);
 
 	const [errors, setErrors] = useState(initialErrors);
@@ -63,6 +63,7 @@ const CourseForm: React.FC = () => {
 
 	useEffect(() => {
 		console.log(courseForEdit);
+
 		if (courseForEdit) {
 			setIsEditMode(true);
 			setCourseData({
@@ -126,10 +127,12 @@ const CourseForm: React.FC = () => {
 				duration: courseData.duration,
 				authors: courseAuthors.map((courseAuthors) => courseAuthors.id),
 			};
-			dispatch(editCourse(editedCourse));
-			dispatch(editCourseOnServer(editedCourse));
+			dispatch(editCourseOnServer(editedCourse)).then(() =>
+				dispatch(fetchCourses())
+			);
+		} else {
+			dispatch(addCourseToServer(newCourseInfo));
 		}
-		dispatch(addCourseToServer(newCourseInfo));
 
 		navigate('/');
 	};

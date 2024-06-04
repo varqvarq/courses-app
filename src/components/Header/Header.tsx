@@ -18,7 +18,6 @@ const Header: React.FC = () => {
 
 	const userInfo = useAppSelector(selectUser);
 	const userToken = localStorage.getItem('userToken');
-	console.log(userInfo);
 
 	const loginOrRegister =
 		location.pathname === '/login' || location.pathname === '/register';

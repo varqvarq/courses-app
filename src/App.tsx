@@ -13,6 +13,7 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import { useAppDispatch } from './hooks/useTypedSelector';
 import { fetchCourses } from './store/courses/coursesSlice';
 import { fetchAuthors } from './store/authors/authorSlice';
+import AdminPrivateRoute from './components/PrivateRoute/AdminPrivateRoute';
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -33,15 +34,16 @@ const App: React.FC = () => {
 				<Route element={<PrivateRoute />}>
 					<Route path='/courses' element={<Courses />}>
 						<Route path='/courses/:courseId' element={<CourseInfo />} />
+						<Route
+							path='/courses/add'
+							element={<AdminPrivateRoute component={<CourseForm />} />}
+						/>
+						<Route
+							path='/courses/update/:courseId'
+							element={<AdminPrivateRoute component={<CourseForm />} />}
+						/>
 					</Route>
 				</Route>
-				<Route element={<PrivateRoute role='admin' />}>
-					<Route path='/courses' element={<Courses />}>
-						<Route path='/courses/add' element={<CourseForm />} />
-						<Route path='/courses/update/:courseId' element={<CourseForm />} />
-					</Route>
-				</Route>
-
 				<Route path='*' element={<Navigate to='/courses' />} />
 			</Routes>
 		</div>

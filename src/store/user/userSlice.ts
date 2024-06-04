@@ -17,8 +17,6 @@ const userInitialState = {
 	role: '',
 } as UserType;
 
-const localToken = localStorage.getItem('userToken');
-
 export const fetchUser = createAsyncThunk(
 	'courses/fetchUser',
 	async (token: string, { rejectWithValue }) => {
@@ -58,10 +56,10 @@ const userSlice = createSlice({
 	name: 'user',
 	initialState: userInitialState,
 	reducers: {
-		setUser: (state, action: PayloadAction<UserType>) => {
+		setUser: (_, action: PayloadAction<UserType>) => {
 			return action.payload;
 		},
-		removeUser: (state) => {
+		removeUser: () => {
 			return userInitialState;
 		},
 	},
@@ -72,7 +70,7 @@ const userSlice = createSlice({
 			state.email = action.payload.email;
 			state.role = action.payload.role;
 		});
-		builder.addCase(removeUserFromServer.fulfilled, (state, action) => {
+		builder.addCase(removeUserFromServer.fulfilled, () => {
 			return userInitialState;
 		});
 	},

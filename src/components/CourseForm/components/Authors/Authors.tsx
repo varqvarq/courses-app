@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import uuid from 'react-uuid';
 
 import style from './Authors.module.scss';
 
-import authorSlice, {
+import {
 	AuthorType,
 	AuthorTypeNew,
-	addAuthor,
 	addAuthorToServer,
 	removeAuthor,
 	removeAuthorFromServer,
@@ -35,8 +33,6 @@ const Authors: React.FC<AuthorsProps> = ({
 	courseAuthors,
 	setCourseAuthors,
 	onError,
-	data,
-	setData,
 }) => {
 	const authors = useAppSelector(selectAuthors);
 	const dispatch = useAppDispatch();

@@ -86,7 +86,7 @@ export const authorSlice = createSlice({
 		builder.addCase(addAuthorToServer.fulfilled, (state, action) => {
 			state.push(action.payload);
 		});
-		builder.addCase(removeAuthorFromServer.fulfilled, (state, action) => {
+		builder.addCase(removeAuthorFromServer.fulfilled, (state) => {
 			return state;
 		});
 	},

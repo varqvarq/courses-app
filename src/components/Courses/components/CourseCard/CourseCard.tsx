@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import formatDate from '../../../../helpers/formatCreationDate';
 import getDuration from '../../../../helpers/getCourseDuration';
@@ -6,7 +6,7 @@ import getDuration from '../../../../helpers/getCourseDuration';
 import style from './CourseCard.module.scss';
 import Button from '../../../../common/Button/Button';
 
-import courseSlice, {
+import {
 	CourseType,
 	removeCourse,
 	removeCourseFromServer,

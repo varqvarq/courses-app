@@ -15,8 +15,9 @@ import { selectCourses } from '../../store/courses/coursesSlice';
 import { selectAuthors } from '../../store/authors/authorSlice';
 
 const CourseInfo: React.FC = () => {
-	const courses = useAppSelector(selectCourses);
+	const { list } = useAppSelector(selectCourses);
 	const authors = useAppSelector(selectAuthors);
+	const courses = list;
 
 	const navigate = useNavigate();
 	const params = useParams();

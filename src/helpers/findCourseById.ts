@@ -1,4 +1,4 @@
-import { CourseTypeNew, CourseType } from '../store/courses/coursesSlice';
+import { CourseType } from '../store/courses/coursesSlice';
 
 const findCourse = (
 	courseId: string | undefined,
