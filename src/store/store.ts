@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import courseSlice from './courses/coursesSlice';
-import authorSlice from './authors/authorSlice';
-import userSlice from './user/userSlice';
+import coursesReducer from './courses/coursesSlice';
+import authorsReducer from './authors/authorSlice';
+import userReducer from './user/userSlice';
 
 export const store = configureStore({
 	reducer: {
-		courses: courseSlice.reducer,
-		authors: authorSlice.reducer,
-		user: userSlice.reducer,
+		courses: coursesReducer,
+		authors: authorsReducer,
+		user: userReducer,
 	},
 });
 

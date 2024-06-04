@@ -5,8 +5,11 @@ import style from './Authors.module.scss';
 
 import authorSlice, {
 	AuthorType,
+	AuthorTypeNew,
 	addAuthor,
+	addAuthorToServer,
 	removeAuthor,
+	removeAuthorFromServer,
 	selectAuthors,
 } from '../../../../store/authors/authorSlice';
 
@@ -18,17 +21,22 @@ import {
 	useAppDispatch,
 	useAppSelector,
 } from '../../../../hooks/useTypedSelector';
+import { CourseType } from '../../../../store/courses/coursesSlice';
 
 interface AuthorsProps {
 	courseAuthors: AuthorType[];
 	setCourseAuthors: React.Dispatch<React.SetStateAction<AuthorType[]>>;
 	onError: boolean;
+	data: CourseType;
+	setData: React.Dispatch<React.SetStateAction<CourseType>>;
 }
 
 const Authors: React.FC<AuthorsProps> = ({
 	courseAuthors,
 	setCourseAuthors,
 	onError,
+	data,
+	setData,
 }) => {
 	const authors = useAppSelector(selectAuthors);
 	const dispatch = useAppDispatch();
@@ -39,36 +47,37 @@ const Authors: React.FC<AuthorsProps> = ({
 		setAuthorName(e.target.value);
 	};
 
+	//создание и добавление автора
 	const handleAuthorCreation = () => {
 		if (!authorName.trim()) {
 			setAuthorName('');
 			return;
 		}
-		const newAuthor: AuthorType = {
+		const newAuthor: AuthorTypeNew = {
 			name: authorName,
-			id: uuid(),
 		};
 
-		if (authors.includes(newAuthor)) {
-			return;
-		}
-
-		dispatch(addAuthor(newAuthor));
+		dispatch(addAuthorToServer(newAuthor));
 		setAuthorName('');
 	};
 
+	//удаление автора
 	const handleAuthorRemove = (id: string) => {
 		dispatch(removeAuthor(id));
+		dispatch(removeAuthorFromServer(id));
 	};
 
+	//добавление автора курса
 	const handleCourseAuthorAdd = (id: string) => {
 		const newCourseAuthor = authors.find((author) => author.id === id);
 
 		if (newCourseAuthor && !courseAuthors.includes(newCourseAuthor)) {
 			setCourseAuthors([...courseAuthors, newCourseAuthor]);
+			// setData({ ...data, authors: courseAuthors });
 		}
 	};
 
+	//удаление автора курса
 	const handleCourseAuthorRemove = (id: string) => {
 		setCourseAuthors((prevCourseAuthors) =>
 			prevCourseAuthors.filter((prevCourseAuthor) => prevCourseAuthor.id !== id)

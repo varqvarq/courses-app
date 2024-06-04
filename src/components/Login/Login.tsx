@@ -57,7 +57,7 @@ export const Login: React.FC = () => {
 		try {
 			setDisabled(true);
 
-			const response = await fetch('http://localhost	:4000/login', {
+			const response = await fetch('http://localhost:4000/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -78,6 +78,7 @@ export const Login: React.FC = () => {
 				name: data.user.name,
 				email: data.user.email,
 				token: data.result,
+				role: 'user',
 			};
 
 			dispatch(setUser(userInfo));

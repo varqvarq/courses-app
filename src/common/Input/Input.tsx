@@ -5,11 +5,13 @@ interface Props {
 	inputType: string;
 	labelText?: string;
 	labelType?: string;
+	name?: string;
 	className?: string;
 	inputClassName?: string;
 	value?: string;
 	placeholderText?: string;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	onAreaChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 	errorMessage?: string;
 	rightElement?: React.ReactNode;
@@ -21,11 +23,13 @@ const Input: React.FC<Props> = ({
 	inputType,
 	labelText,
 	labelType,
+	name,
 	className,
 	inputClassName,
 	value,
 	placeholderText = 'Input text',
 	onChange,
+	onAreaChange,
 	onKeyDown,
 	errorMessage,
 	rightElement,
@@ -48,6 +52,9 @@ const Input: React.FC<Props> = ({
 						id={inputId}
 						className={`${errorMessage && style.borderError} ${style.input} ${style.textArea} ${inputClassName}`}
 						placeholder={placeholderText}
+						onChange={onAreaChange}
+						name={inputId}
+						value={value}
 					/>
 				) : (
 					<input
@@ -56,6 +63,7 @@ const Input: React.FC<Props> = ({
 						className={`${errorMessage && style.borderError} ${style.input} ${inputClassName}`}
 						placeholder={placeholderText}
 						value={value}
+						name={inputId}
 						onChange={onChange}
 						onKeyDown={onKeyDown}
 					/>
