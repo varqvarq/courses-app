@@ -1,0 +1,24 @@
+.button {
+  height: 3.125rem;
+  background-color: #007298;
+  border: none;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: wrap;
+  padding: 0 10px;
+}
+
+.button:hover {
+  background-color: #015874;
+}
+
+@media only screen and (max-width: 768px) {
+  .button {
+    font-size: 12px;
+  }
+}
+

@@ -1,0 +1,31 @@
+@import '../mixins.scss';
+
+.heading {
+  @include createCourseHeading;
+}
+
+.title {
+  margin-bottom: 1.5rem;
+}
+
+.titleInput {
+  max-width: 59rem;
+  width: 100%;
+}
+
+
+.description {
+  margin-bottom: 2rem;
+}
+
+.descriptionArea {
+  max-width: 59rem;
+  width: 100%;
+  text-wrap: wrap;
+}
+
+@media only screen and (max-width: 768px) {
+  .description {
+    margin-bottom: 1rem;
+  }
+}
