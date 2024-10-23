@@ -1,0 +1,91 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  .label {
+    height: 20px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #333e48;
+    text-transform: capitalize;
+    width: fit-content;
+  }
+  
+  .smallLabel {
+    font-size: 14px;
+    line-height: 143%;
+  }
+
+  .inputWrapper {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+    gap: 1rem;
+
+    .input {
+      color: #333E48;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.25rem;
+      height: 50px;
+      border: 1px solid #CFCFCF;
+      border-radius: .25rem;
+      padding: .8125rem 0 .8125rem .9375rem;
+    }
+    
+    .textArea {
+      color: #333E48;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.25rem;
+      padding: .9375rem 0 0 .9375rem; 
+      resize: none;
+      min-height: 9.5rem;
+    }
+
+    .borderError {
+      border-color: red;
+    }
+  }
+
+  .wrap {
+    flex-wrap: wrap;
+  }
+  
+  .errorMessage {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 125%;
+    color: #f00;
+    display: flex;
+    flex-direction: column;
+    margin-bottom : -20px;
+ 
+  }
+
+  .borderError {
+    border-color: red;
+  }
+  
+  
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  ::placeholder {
+    font-family: 'Open Sans';
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+  }
+}
+
+
+
+
+
+

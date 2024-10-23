@@ -1,0 +1,133 @@
+
+.form {
+  width: 100%;
+  max-width: 1150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .formTitle {
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 125%;
+    color: #333e48;
+  }
+
+  .formContent {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid hsl(0, 0%, 81%);
+    border-radius: .25rem;
+    background-color: #FFFF;
+    padding: 2.625rem 5rem 5rem 5rem;
+    margin-bottom: 2rem;
+
+      .subheading {
+        width: fit-content;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 133%;
+        text-transform: capitalize;
+        color: #333e48;
+        margin-bottom: 1.5625rem
+      }
+
+      .duration {
+        margin-bottom: 2rem;
+      }
+      
+      .authorsSection {
+        display: flex;
+        justify-content: space-between;
+
+        .authorsList {
+          display: flex;
+          flex-direction: column;
+  
+          .createAuthor {
+            width: 100%;
+            display: flex;
+
+            .authorsInput {
+              width: 25rem;
+              margin-right: .9375rem;
+              margin-bottom: 2rem;
+            }
+      
+            .authorsButton {
+              width: 11.5625rem;
+            }
+          }
+  
+          .authorsSubheading {
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 100%;
+            color: #333e48;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+          }
+        }
+  
+        .courseAuthorsList {
+          display: flex;
+          flex-direction: column;
+  
+          .placeholder{
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 125%;
+            text-align: center;
+            color: #333e48;
+            align-self: center;
+          }
+          .red {
+            color: red;
+          }
+        }
+      }
+      .errorMessage.active {
+        visibility: visible;
+      }
+    }
+  }
+
+  .buttonsWrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+
+    .formButton {
+      max-width: 11.5625rem;
+      width: 100%;
+      margin-bottom: 50px;
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+  .form {
+    // height: 100dvh;
+    .formTitle {
+      font-size: 1.7rem;
+    }
+
+    .formContent {
+      padding: 20px;
+
+      .duration {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .buttonsWrapper {
+    justify-content: space-between;
+    max-width: 100vw;
+
+    .formButton {
+      width: 50%;
+    }
+  }
+}
